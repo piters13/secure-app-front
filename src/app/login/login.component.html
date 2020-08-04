@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row align-items-center">
+    <mat-card class="col-6 col-lg-4 offset-3 offset-lg-4 text-center">
+      <mat-button-toggle-group #group="matButtonToggleGroup" [(value)]="toggleValue" class="mb-3">
+        <mat-button-toggle value="signIn">Sign in</mat-button-toggle>
+        <mat-button-toggle value="signUp">Sign up</mat-button-toggle>
+      </mat-button-toggle-group>
+      <form [formGroup]="loginForm" class="d-flex flex-column">
+        <mat-form-field>
+          <mat-label>Login</mat-label>
+          <input matInput placeholder="t.hajto" formControlName="login">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="*****" formControlName="password">
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+
+        <div *ngIf="group.value === 'signUp'">
+          <small>Wybierz sposób szyfrowania hasła:</small>
+          <mat-radio-group formControlName="encryptionType" class="d-flex justify-content-around mt-2">
+          <mat-radio-button value="HMAC">HMAC</mat-radio-button>
+          <mat-radio-button value="SHA512">SHA512</mat-radio-button>
+        </mat-radio-group>
+        </div>
+
+        <button mat-button (click)="submit(group.value)">{{group.value === 'signIn' ? 'Sign in' : 'Sign up'}}</button>
+      </form>
+    </mat-card>
+  </div>
+</div>
